@@ -5,9 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
@@ -19,24 +17,24 @@ import com.fcc.util.viewport.ViewportManager;
 
 /**
  * Project: Pong_V4
- * Created by fromCharCode on 27.08.2017.
+ * Created by fromCharCode on 07.09.2017.
  */
-public class MenuScreen extends ScreenBaseAdapter {
+class OptionsScreen extends ScreenBaseAdapter {
 
     // == attributes ==
     private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
-
-    private SoundController soundController;
+    private final SoundController soundController;
 
     private Stage stage;
 
     // == constructors ==
-    public MenuScreen(GameBase game) {
+    OptionsScreen(GameBase game, SoundController soundController) {
         this.game = game;
         assetManager = game.getAssetManager();
         viewportManager = game.getViewportManager();
+        this.soundController = soundController;
     }
 
     // == public methods ==
@@ -46,39 +44,39 @@ public class MenuScreen extends ScreenBaseAdapter {
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
-        soundController = new SoundController(assetManager);
-
+        // main table
         Table table = new Table(skin);
-        table.defaults().space(20);
+        table.defaults().space(40);
         table.setBackground(RegionNames.BACKGROUND);
 
-        TextButton playButton = new TextButton("PLAY", skin);
-        playButton.addListener(new ChangeListener() {
+
+        // SoundBar?
+        Slider.SliderStyle sliderStyle = new Slider.SliderStyle(); // first param slider bg // second knob
+        final Slider volumeSlider = new Slider(0f, 1f, 0.1f, false, sliderStyle); // we need to add a slider
+        volumeSlider.setValue(soundController.getVolume());
+        volumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                play();
+                soundController.setVolume(volumeSlider.getValue());
             }
         });
 
-        TextButton optionButton = new TextButton("OPTIONS", skin);
-        optionButton.addListener(new ChangeListener() {
+
+        // meeeeeh. let's see
+
+
+
+        // back button
+        TextButton backButton = new TextButton("BACK", skin);
+        backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                options();
+                game.setScreen(new MenuScreen(game));
             }
         });
 
-        TextButton quitButton = new TextButton("QUIT", skin);
-        quitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                quit();
-            }
-        });
-
-        table.add(playButton).row();
-        table.add(optionButton).row();
-        table.add(quitButton).row();
+        table.add(volumeSlider).row();
+        table.add(backButton);
         table.center();
         table.setFillParent(true);
         table.pack();
@@ -90,8 +88,6 @@ public class MenuScreen extends ScreenBaseAdapter {
     @Override
     public void render(float delta) {
         viewportManager.applyHud();
-
-
         GdxUtils.clearScreen();
         stage.act();
         stage.draw();
@@ -116,18 +112,5 @@ public class MenuScreen extends ScreenBaseAdapter {
     @Override
     public InputProcessor getInputProcessor() {
         return stage;
-    }
-
-    // == private methods ==
-    private void play(){
-        game.setScreen(new PlayerScreen(game, soundController));
-    }
-
-    private void options(){
-        game.setScreen(new OptionsScreen(game, soundController));
-    }
-
-    private void quit(){
-        Gdx.app.exit();
     }
 }

@@ -23,6 +23,7 @@ public class GameScreen extends ScreenBaseAdapter{
     private final AssetManager assetManager;
     private final SpriteBatch batch;
     private final int amount;
+    private final SoundController soundController;
 
     private GameWorld gameWorld;
     private GameRenderer renderer;
@@ -31,22 +32,21 @@ public class GameScreen extends ScreenBaseAdapter{
     private GameType gameType;
 
     private EntityFactory factory;
-    private SoundController soundController;
 
     // == constructors ==
-    public GameScreen(GameBase game, int amount, GameType gameType) {
+    public GameScreen(GameBase game, int amount, GameType gameType, SoundController soundController) {
         this.game = game;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
         this.amount = amount;
         this.gameType = gameType;
+        this.soundController = soundController;
     }
 
     // public methods ==
     @Override
     public void show() {
         factory = new EntityFactory(assetManager);
-        soundController = new SoundController(assetManager);
         gameWorld = new GameWorld(soundController, game, factory, amount, gameType);
         renderer = new GameRenderer(gameWorld, batch, assetManager, game.getViewportManager());
         controller = new GameController(gameWorld, renderer);

@@ -16,6 +16,7 @@ public class SoundController {
     private Sound hit_right;
     private Sound hit_left;
     private Sound lose;
+    private float volume = 1f;
 
     // == constructors ==
     public SoundController(AssetManager assetManager) {
@@ -32,14 +33,22 @@ public class SoundController {
 
     // == public methods ==
     public void hitRight(){
-        hit_right.play();
+        hit_right.play(volume);
     }
 
     public void hitLeft(){
-        hit_left.play();
+        hit_left.play(volume);
     }
 
     public void lose(){
-        lose.play();
+        lose.play(volume);
+    }
+
+    public float getVolume() {
+        return volume;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
     }
 }
