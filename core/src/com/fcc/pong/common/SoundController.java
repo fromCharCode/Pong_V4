@@ -16,7 +16,7 @@ public class SoundController {
     private Sound hit_right;
     private Sound hit_left;
     private Sound lose;
-    private float volume = 1f;
+    private float volume;
 
     // == constructors ==
     public SoundController(AssetManager assetManager) {
@@ -26,6 +26,7 @@ public class SoundController {
 
     // == init ==
     private void init(){
+        volume = GameManager.INSTANCE.getVolume();
         hit_right = assetManager.get(AssetDescriptors.HIT_RIGHT);
         hit_left = assetManager.get(AssetDescriptors.HIT_LEFT);
         lose = assetManager.get(AssetDescriptors.LOSE);

@@ -15,6 +15,8 @@ public final class RegionNames {
     public static final String BALL = "ball";
     public static final String PADDLE_LEFT = "paddle-left";
     public static final String PADDLE_RIGHT = "paddle-right";
+    public static final String SLIDER_BACKGROUND = "slider-background";
+    public static final String SLIDER_BUTTON = "slider-button";
 
     // == constructors ==
     private RegionNames(){}

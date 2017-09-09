@@ -3,12 +3,16 @@ package com.fcc.pong.screen.menu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Logger;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
+import com.fcc.pong.common.GameManager;
 import com.fcc.pong.common.SoundController;
 import com.fcc.util.GdxUtils;
 import com.fcc.util.game.GameBase;
@@ -21,6 +25,9 @@ import com.fcc.util.viewport.ViewportManager;
  */
 class OptionsScreen extends ScreenBaseAdapter {
 
+    // == constants ==
+    private static final Logger log = new Logger(OptionsScreen.class.getSimpleName(), Logger.DEBUG);
+
     // == attributes ==
     private final GameBase game;
     private final AssetManager assetManager;
@@ -28,6 +35,8 @@ class OptionsScreen extends ScreenBaseAdapter {
     private final SoundController soundController;
 
     private Stage stage;
+
+    private Label volumeLabel;
 
     // == constructors ==
     OptionsScreen(GameBase game, SoundController soundController) {
@@ -49,15 +58,17 @@ class OptionsScreen extends ScreenBaseAdapter {
         table.defaults().space(40);
         table.setBackground(RegionNames.BACKGROUND);
 
+        // Sound label
+        volumeLabel = new Label("VOLUME", skin);
 
-        // SoundBar?
-        Slider.SliderStyle sliderStyle = new Slider.SliderStyle(); // first param slider bg // second knob
-        final Slider volumeSlider = new Slider(0f, 1f, 0.1f, false, sliderStyle); // we need to add a slider
-        volumeSlider.setValue(soundController.getVolume());
+        // SoundBar
+        final Slider volumeSlider = new Slider(0f, 1f, 0.01f, false, skin); // we need to add a slider
+        volumeSlider.setValue(GameManager.INSTANCE.getVolume());
         volumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                soundController.setVolume(volumeSlider.getValue());
+                GameManager.INSTANCE.setVolume(volumeSlider.getValue());
+                log.debug("volume level= " + soundController.getVolume());
             }
         });
 
@@ -75,6 +86,7 @@ class OptionsScreen extends ScreenBaseAdapter {
             }
         });
 
+        table.add(volumeLabel).row();
         table.add(volumeSlider).row();
         table.add(backButton);
         table.center();
