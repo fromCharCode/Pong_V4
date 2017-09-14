@@ -10,7 +10,7 @@ This is not the final state of the pong game, but the game is running well.
 
 there will be added:
 - LAN Multiplayer
-- different Texturepacks
+- different Texturepacks (done)
 - changing sound volume (done)
 - pickups
 - maybe obstacles + different maps
