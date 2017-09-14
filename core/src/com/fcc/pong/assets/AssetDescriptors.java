@@ -14,11 +14,16 @@ import com.badlogic.gdx.utils.Array;
  */
 public final class AssetDescriptors {
 
+    // atlases
+
+
     public static final AssetDescriptor<BitmapFont> FONT = new AssetDescriptor<BitmapFont>(AssetPaths.SCORE_FONT, BitmapFont.class);
 
     public static final AssetDescriptor<Texture> BANNER = new AssetDescriptor<Texture>(AssetPaths.BANNER, Texture.class);
 
-    public static final AssetDescriptor<TextureAtlas> GAME_PLAY = new AssetDescriptor<TextureAtlas>(AssetPaths.GAME_PLAY, TextureAtlas.class);
+    public static final AssetDescriptor<Texture> BACKGROUND = new AssetDescriptor<Texture>(AssetPaths.BACKGROUND, Texture.class);
+
+    public static AssetDescriptor<TextureAtlas> GAME_PLAY;
 
     public static final AssetDescriptor<Skin> SKIN = new AssetDescriptor<Skin>(AssetPaths.SKIN, Skin.class);
 
@@ -33,10 +38,13 @@ public final class AssetDescriptors {
 
     // static init
     static {
+
+
+
         ALL.addAll(
                 FONT,
                 BANNER,
-                GAME_PLAY,
+                BACKGROUND,
                 SKIN,
                 HIT_RIGHT,
                 HIT_LEFT,
@@ -46,4 +54,8 @@ public final class AssetDescriptors {
 
     // == constructors ==
     private AssetDescriptors(){}
+
+    public static void setGamePlay(){
+        GAME_PLAY = new AssetDescriptor<TextureAtlas>(AssetPaths.GAME_PLAY, TextureAtlas.class);
+    }
 }

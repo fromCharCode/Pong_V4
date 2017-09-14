@@ -3,6 +3,7 @@ package com.fcc.pong.screen.game.world;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
@@ -45,7 +46,7 @@ public class GameRenderer implements Disposable {
 
     private BitmapFont scoreFont;
 
-    private TextureRegion backgroundRegion;
+    private Texture background;
     private TextureRegion ballRegion;
     private TextureRegion leftPaddleRegion;
     private TextureRegion rightPaddleRegion;
@@ -68,8 +69,9 @@ public class GameRenderer implements Disposable {
 
         scoreFont = assetManager.get(AssetDescriptors.FONT);
 
+        background = assetManager.get(AssetDescriptors.BACKGROUND);
+
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.GAME_PLAY);
-        backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
         ballRegion = gamePlayAtlas.findRegion(RegionNames.BALL);
         leftPaddleRegion = gamePlayAtlas.findRegion(RegionNames.PADDLE_LEFT);
         rightPaddleRegion = gamePlayAtlas.findRegion(RegionNames.PADDLE_RIGHT);
@@ -121,7 +123,7 @@ public class GameRenderer implements Disposable {
 
     private void drawGamePlay(){
         // background
-        batch.draw(backgroundRegion, 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+        batch.draw(background, 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
 
         // ball
         Ball ball = gameWorld.getBall();

@@ -3,6 +3,8 @@ package com.fcc.pong.screen.LoadingScreen;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.utils.Array;
 import com.fcc.pong.assets.AssetDescriptors;
+import com.fcc.pong.assets.AssetPaths;
+import com.fcc.pong.common.GameManager;
 import com.fcc.pong.screen.banner.BannerScreen;
 import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.loading.LoadingScreenBase;
@@ -24,6 +26,12 @@ public class LoadingScreen extends LoadingScreenBase {
 
     @Override
     protected void onLoadDone() {
+        // loading default atlas
+        AssetPaths.setGamePlay(GameManager.INSTANCE.getAtlas());
+        AssetDescriptors.setGamePlay();
+        assetManager.load(AssetDescriptors.GAME_PLAY);
+        assetManager.finishLoading();
+
         game.setScreen(new BannerScreen(game));
     }
 

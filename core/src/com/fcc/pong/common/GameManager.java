@@ -2,6 +2,7 @@ package com.fcc.pong.common;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fcc.pong.PongGame;
 
 /**
@@ -14,9 +15,14 @@ public class GameManager {
     public static final GameManager INSTANCE = new GameManager();
 
     private static final String VOLUME_KEY = "volume";
+    private static final String ATLAS_KEY = "atlas";
 
     // == attributes ==
     private float volume;
+    private String atlas;
+    // possibly not necessary
+    private String atlasPath = "gameplay/";
+
 
     private Preferences prefs;
 
@@ -25,6 +31,7 @@ public class GameManager {
         prefs = Gdx.app.getPreferences(PongGame.class.getSimpleName());
 
         volume = prefs.getFloat(VOLUME_KEY, 1f);
+        atlas = prefs.getString(ATLAS_KEY, "gameplay.atlas");
     }
 
     // NOTE: no prefs.flush -> Volume just gets temporary saved, but is always 1.0f at a restart of the programm
@@ -35,5 +42,13 @@ public class GameManager {
 
     public float getVolume() {
         return volume;
+    }
+
+    public String getAtlas() {
+        return atlas;
+    }
+
+    public void setAtlas(String atlas) {
+        this.atlas = atlas;
     }
 }

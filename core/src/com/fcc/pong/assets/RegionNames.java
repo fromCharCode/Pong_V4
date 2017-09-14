@@ -11,7 +11,7 @@ public final class RegionNames {
     // EDIT: eventually for background, ball and paddle
 
     // == constants ==
-    public static final String BACKGROUND = "background";
+    public static final String BACKGROUND = "background";   // for menus
     public static final String BALL = "ball";
     public static final String PADDLE_LEFT = "paddle-left";
     public static final String PADDLE_RIGHT = "paddle-right";
