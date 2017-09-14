@@ -48,7 +48,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         table.setBackground(RegionNames.BACKGROUND);
 
         // text field
-        TextField inputField = new TextField("input IP", skin);
+        //TextField inputField = new TextField("input IP", skin);
 
         // connect button
         TextButton connectButton = new TextButton("CONNECT", skin);
@@ -67,7 +67,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         });
 
 
-        table.add(inputField).row();
+        //table.add(inputField).row();
         table.add(connectButton).row();
         table.add(hostButton).row();
         table.add(backButton).row();
