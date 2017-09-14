@@ -5,10 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
@@ -99,7 +96,10 @@ public class PlayerScreen extends ScreenBaseAdapter {
         actionTable.defaults().space(20);
 
         TextButton soloButton = new TextButton("1 PLAYER", skin);
-        TextButton multiPlayerButton = new TextButton("2 PLAYER", skin);
+        TextButton localMultiPlayerButton = new TextButton("2 PLAYER", skin);
+
+        TextButton multiPlayerButton = new TextButton("MULTIPLAYER", skin);
+
         TextButton backButton = new TextButton("BACK", skin);
 
         soloButton.addListener(new ChangeListener() {
@@ -110,13 +110,21 @@ public class PlayerScreen extends ScreenBaseAdapter {
             }
         });
 
-        multiPlayerButton.addListener(new ChangeListener() {
+        localMultiPlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 gameType = GameType.MULTI_PLAYER;
                 play();
             }
         });
+
+        multiPlayerButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MultiPlayerMenu(game));
+            }
+        });
+        multiPlayerButton.setDisabled(true); // TODO: remove
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -126,6 +134,7 @@ public class PlayerScreen extends ScreenBaseAdapter {
         });
 
         actionTable.add(soloButton).row();
+        actionTable.add(localMultiPlayerButton).row();
         actionTable.add(multiPlayerButton).row();
         actionTable.add(backButton);
 

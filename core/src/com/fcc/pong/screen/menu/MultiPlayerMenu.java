@@ -8,91 +8,80 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
-import com.fcc.pong.common.SoundController;
 import com.fcc.util.GdxUtils;
 import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
+import com.sun.xml.internal.ws.policy.AssertionSet;
 
 /**
  * Project: Pong_V4
- * Created by fromCharCode on 27.08.2017.
+ * Created by fromCharCode on 14.09.2017.
  */
-public class MenuScreen extends ScreenBaseAdapter {
+public class MultiPlayerMenu extends ScreenBaseAdapter {
 
-    // == attributes ==
     private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
 
-    private SoundController soundController;
-
     private Stage stage;
 
-    // == constructors ==
-    public MenuScreen(GameBase game) {
+    public MultiPlayerMenu(GameBase game) {
         this.game = game;
         assetManager = game.getAssetManager();
         viewportManager = game.getViewportManager();
     }
 
-    // == public methods ==
     @Override
     public void show() {
         stage = new Stage(viewportManager.getHudViewport(), game.getBatch());
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
-        soundController = new SoundController(assetManager);
-
+        // main table
         Table table = new Table(skin);
-        table.defaults().space(20);
+        table.defaults().space(40);
         table.setBackground(RegionNames.BACKGROUND);
 
-        TextButton playButton = new TextButton("PLAY", skin);
-        playButton.addListener(new ChangeListener() {
+        // text field
+        TextField inputField = new TextField("input IP", skin);
+
+        // connect button
+        TextButton connectButton = new TextButton("CONNECT", skin);
+
+
+        // host button
+        TextButton hostButton = new TextButton("HOST", skin);
+
+        // back button
+        TextButton backButton = new TextButton("BACK", skin);
+        backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                play();
+                game.setScreen(new MenuScreen(game));
             }
         });
 
 
-        TextButton optionButton = new TextButton("OPTIONS", skin);
-        optionButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                options();
-            }
-        });
+        table.add(inputField).row();
+        table.add(connectButton).row();
+        table.add(hostButton).row();
+        table.add(backButton).row();
 
-        TextButton quitButton = new TextButton("QUIT", skin);
-        quitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                quit();
-            }
-        });
-
-        table.add(playButton).row();
-        table.add(optionButton).row();
-        table.add(quitButton).row();
         table.center();
         table.setFillParent(true);
         table.pack();
 
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
         viewportManager.applyHud();
-
-
         GdxUtils.clearScreen();
         stage.act();
         stage.draw();
@@ -100,7 +89,7 @@ public class MenuScreen extends ScreenBaseAdapter {
 
     @Override
     public void resize(int width, int height) {
-        viewportManager.resize(width, height);
+        viewportManager.applyHud();
     }
 
     @Override
@@ -117,18 +106,5 @@ public class MenuScreen extends ScreenBaseAdapter {
     @Override
     public InputProcessor getInputProcessor() {
         return stage;
-    }
-
-    // == private methods ==
-    private void play(){
-        game.setScreen(new PlayerScreen(game, soundController));
-    }
-
-    private void options(){
-        game.setScreen(new OptionsScreen(game, soundController));
-    }
-
-    private void quit(){
-        Gdx.app.exit();
     }
 }

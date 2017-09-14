@@ -239,7 +239,7 @@ class OptionsScreen extends ScreenBaseAdapter {
     private void updateLabel(){
         currentPackLabel.setText("" + fileArray.get(i).getName());
     }
- 
+
     private void clampI(){
         if (i < 0){
             i = fileArray.size -1;   // -1 because length doesn't begin with 0
