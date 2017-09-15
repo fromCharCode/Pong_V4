@@ -48,6 +48,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         table.setBackground(RegionNames.BACKGROUND);
 
         // text field
+        // first create a TextfieldStyle
         //TextField inputField = new TextField("input IP", skin);
 
         // connect button
