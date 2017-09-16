@@ -2,6 +2,7 @@ package com.fcc.pong.screen.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.common.GameType;
 import com.fcc.pong.common.SoundController;
 import com.fcc.pong.entity.EntityFactory;
@@ -34,20 +35,20 @@ public class GameScreen extends ScreenBaseAdapter{
     private EntityFactory factory;
 
     // == constructors ==
-    public GameScreen(GameBase game, int amount, GameType gameType, SoundController soundController) {
+    public GameScreen(GameBase game, int amount, GameType gameType) {
         this.game = game;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
         this.amount = amount;
         this.gameType = gameType;
-        this.soundController = soundController;
+        soundController = (((PongGame) game).getSoundController());
     }
 
     // public methods ==
     @Override
     public void show() {
         factory = new EntityFactory(assetManager);
-        gameWorld = new GameWorld(soundController, game, factory, amount, gameType);
+        gameWorld = new GameWorld(game, factory, amount, gameType);
         renderer = new GameRenderer(gameWorld, batch, assetManager, game.getViewportManager());
         controller = new GameController(gameWorld, renderer);
     }

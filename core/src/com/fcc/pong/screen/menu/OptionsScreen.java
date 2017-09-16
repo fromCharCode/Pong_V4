@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.AssetPaths;
 import com.fcc.pong.assets.RegionNames;
@@ -59,11 +60,11 @@ class OptionsScreen extends ScreenBaseAdapter {
     private int filePointer = 1;
 
     // == constructors ==
-    OptionsScreen(GameBase game, SoundController soundController) {
+    OptionsScreen(GameBase game) {
         this.game = game;
         assetManager = game.getAssetManager();
         viewportManager = game.getViewportManager();
-        this.soundController = soundController;
+        soundController = (((PongGame) game).getSoundController());
         currentAtlas = AssetDescriptors.GAME_PLAY;
         init();
     }
@@ -82,13 +83,7 @@ class OptionsScreen extends ScreenBaseAdapter {
 
             }
         }
-
         i = GameManager.INSTANCE.getAtlasPoint();
-        /*for(int j = 0; j <= files.length; j++){
-            if (files[j].extension().equals("atlas")){
-//                log.debug("" + file.length);
-            }
-        }*/
     }
 
     // == public methods ==
@@ -151,6 +146,7 @@ class OptionsScreen extends ScreenBaseAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.INSTANCE.setVolume(volumeSlider.getValue());
+                soundController.setVolume(volumeSlider.getValue());
             }
         });
 

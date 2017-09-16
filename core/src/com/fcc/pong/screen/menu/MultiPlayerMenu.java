@@ -10,14 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
-import com.fcc.pong.config.GameConfig;
 import com.fcc.util.GdxUtils;
 import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
-import com.sun.xml.internal.ws.policy.AssertionSet;
 
 /**
  * Project: Pong_V4
@@ -64,7 +63,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new PlayerScreen(game));
             }
         });
 

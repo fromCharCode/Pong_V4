@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.common.GameType;
@@ -38,11 +39,11 @@ public class PlayerScreen extends ScreenBaseAdapter {
     private Label amountLabel;
 
     // == constructors ==
-    PlayerScreen(GameBase game, SoundController soundController){
+    PlayerScreen(GameBase game){
         this.game = game;
         assetManager = game.getAssetManager();
         viewportManager = game.getViewportManager();
-        this.soundController = soundController; // TODO: add menu music later
+        soundController = (((PongGame) game).getSoundController()); // TODO: add menu music later
     }
 
     // == public methods ==
@@ -184,7 +185,7 @@ public class PlayerScreen extends ScreenBaseAdapter {
     }
 
     private void play(){
-        game.setScreen(new GameScreen(game, amount, gameType, soundController), ScreenTransitions.SLIDE);
+        game.setScreen(new GameScreen(game, amount, gameType), ScreenTransitions.SLIDE);
     }
 
     private void back(){

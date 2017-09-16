@@ -3,6 +3,7 @@ package com.fcc.pong.screen.game.world;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.common.GameType;
 import com.fcc.pong.common.SoundController;
 import com.fcc.pong.config.GameConfig;
@@ -44,8 +45,8 @@ public class GameWorld {
     private boolean isRightStart;
 
     // == constructors ==
-    public GameWorld(SoundController soundController, GameBase game, EntityFactory factory, int maxRounds, GameType gameType) {
-        this.soundController = soundController;
+    public GameWorld(GameBase game, EntityFactory factory, int maxRounds, GameType gameType) {
+        soundController = (((PongGame) game).getSoundController());
         this.game = game;
         this.factory = factory;
         this.maxRounds = maxRounds;

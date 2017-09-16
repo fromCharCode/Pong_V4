@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.common.SoundController;
@@ -46,7 +47,7 @@ public class MenuScreen extends ScreenBaseAdapter {
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
-        soundController = new SoundController(assetManager);
+        soundController = (((PongGame) game).getSoundController());
 
         Table table = new Table(skin);
         table.defaults().space(20);
@@ -121,11 +122,11 @@ public class MenuScreen extends ScreenBaseAdapter {
 
     // == private methods ==
     private void play(){
-        game.setScreen(new PlayerScreen(game, soundController));
+        game.setScreen(new PlayerScreen(game));
     }
 
     private void options(){
-        game.setScreen(new OptionsScreen(game, soundController));
+        game.setScreen(new OptionsScreen(game));
     }
 
     private void quit(){
