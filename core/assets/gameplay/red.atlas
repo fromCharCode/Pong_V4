@@ -1,0 +1,27 @@
+
+red.png
+size: 128,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ball
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+paddle-left
+  rotate: false
+  xy: 68, 2
+  size: 16, 64
+  orig: 16, 64
+  offset: 0, 0
+  index: -1
+paddle-right
+  rotate: false
+  xy: 86, 2
+  size: 16, 64
+  orig: 16, 64
+  offset: 0, 0
+  index: -1

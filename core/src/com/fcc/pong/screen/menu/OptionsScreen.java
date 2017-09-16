@@ -83,7 +83,7 @@ class OptionsScreen extends ScreenBaseAdapter {
             }
         }
 
-
+        i = GameManager.INSTANCE.getAtlasPoint();
         /*for(int j = 0; j <= files.length; j++){
             if (files[j].extension().equals("atlas")){
 //                log.debug("" + file.length);
@@ -237,6 +237,7 @@ class OptionsScreen extends ScreenBaseAdapter {
     }
 
     private void updateLabel(){
+        GameManager.INSTANCE.setAtlasPoint(i);
         currentPackLabel.setText("" + fileArray.get(i).getName());
     }
 
