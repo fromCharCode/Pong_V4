@@ -124,7 +124,6 @@ public class PlayerScreen extends ScreenBaseAdapter {
                 game.setScreen(new MultiPlayerMenu(game));
             }
         });
-        //multiPlayerButton.setDisabled(true); // TODO: remove
 
         backButton.addListener(new ChangeListener() {
             @Override

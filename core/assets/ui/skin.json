@@ -39,5 +39,30 @@
       "background": "slider-background",
       "knob": "slider-button"
     }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+    "default": {
+      "font": "default-font",
+      "background": "slider-background"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": {
+      "titleFont": "default-font",
+      "background": "background",
+      "titleFontColor": "white"
+    },
+    "dialog": {
+      "titleFont": "default-font",
+      "background": "slider-background",
+      "titleFontColor": "white"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+    "default": {
+      "background": "slider-background",
+      "font": "default-font",
+      "fontColor": "white"
+    }
   }
 }

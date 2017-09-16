@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
+import com.fcc.pong.config.GameConfig;
 import com.fcc.util.GdxUtils;
 import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
@@ -48,8 +49,8 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         table.setBackground(RegionNames.BACKGROUND);
 
         // text field
-        // first create a TextfieldStyle
-        //TextField inputField = new TextField("input IP", skin);
+        TextField inputField = new TextField("", skin);
+        inputField.setMessageText("enter IP");
 
         // connect button
         TextButton connectButton = new TextButton("CONNECT", skin);
@@ -68,7 +69,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         });
 
 
-        //table.add(inputField).row();
+        table.add(inputField).row();
         table.add(connectButton).row();
         table.add(hostButton).row();
         table.add(backButton).row();
@@ -90,7 +91,7 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
 
     @Override
     public void resize(int width, int height) {
-        viewportManager.applyHud();
+        viewportManager.resize(width, height);
     }
 
     @Override
