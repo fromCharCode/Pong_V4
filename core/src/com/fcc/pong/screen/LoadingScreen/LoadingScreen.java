@@ -2,7 +2,6 @@ package com.fcc.pong.screen.LoadingScreen;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.utils.Array;
-import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.AssetPaths;
 import com.fcc.pong.common.GameManager;
@@ -39,9 +38,7 @@ public class LoadingScreen extends LoadingScreenBase {
 
         soundController =  new SoundController(game.getAssetManager());
 
-        ((PongGame) game).setSoundController(soundController);
-
-        game.setScreen(new BannerScreen(game));
+        game.setScreen(new BannerScreen());
     }
 
 }

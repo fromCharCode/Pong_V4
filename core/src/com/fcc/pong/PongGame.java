@@ -26,6 +26,6 @@ public class PongGame extends GameBase {
 
     @Override
     public void postCreate() {
-        setScreen(new LoadingScreen());
+        setScreen(new LoadingScreen(this));
     }
 }
