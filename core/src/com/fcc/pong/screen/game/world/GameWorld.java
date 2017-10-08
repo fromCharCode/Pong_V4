@@ -36,6 +36,8 @@ public class GameWorld {
     private boolean drawGrid = true;
     private boolean paused;
 
+    private GameType gameType;
+
     private int leftScore;
     private int rightScore;
     private int round;
@@ -47,6 +49,8 @@ public class GameWorld {
         this.soundController = soundController;
         this.factory = factory;
         this.maxRounds = maxRounds;
+
+        this.gameType = gameType;
 
         init();
     }

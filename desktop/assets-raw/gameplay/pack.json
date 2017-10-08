@@ -1,4 +1,4 @@
 {
-  "flattenPaths" : "true",
-  "combineSubdirectories" : "true"
+  "flattenPaths" : "false",
+  "combineSubdirectories" : "false"
 }

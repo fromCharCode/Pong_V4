@@ -6,7 +6,9 @@ import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.AssetPaths;
 import com.fcc.pong.common.GameManager;
+import com.fcc.pong.common.SoundController;
 import com.fcc.pong.screen.banner.BannerScreen;
+import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.loading.LoadingScreenBase;
 
 /**
@@ -15,8 +17,11 @@ import com.fcc.util.screen.loading.LoadingScreenBase;
  */
 public class LoadingScreen extends LoadingScreenBase {
 
-    public LoadingScreen() {
-        super(PongGame.getInstance());
+    // == attributes ==
+    private SoundController soundController;
+
+    public LoadingScreen(GameBase game) {
+        super(game);
     }
 
     @Override
@@ -32,7 +37,11 @@ public class LoadingScreen extends LoadingScreenBase {
         assetManager.load(AssetDescriptors.GAME_PLAY);
         assetManager.finishLoading();
 
-        game.setScreen(new BannerScreen());
+        soundController =  new SoundController(game.getAssetManager());
+
+        ((PongGame) game).setSoundController(soundController);
+
+        game.setScreen(new BannerScreen(game));
     }
 
 }

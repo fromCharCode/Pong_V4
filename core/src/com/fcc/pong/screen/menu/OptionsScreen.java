@@ -149,6 +149,7 @@ class OptionsScreen extends ScreenBaseAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 GameManager.INSTANCE.setVolume(volumeSlider.getValue());
+                soundController.setVolume(volumeSlider.getValue());
             }
         });
 

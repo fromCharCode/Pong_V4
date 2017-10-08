@@ -1,7 +1,9 @@
 package com.fcc.pong.desktop;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.tools.FileProcessor;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.fcc.pong.PongGame;
 import com.fcc.pong.config.GameConfig;
@@ -20,4 +22,12 @@ public class AssetPacker {
         TexturePacker.process(RAW_ASSETS_PATH + "/skin", ASSETS_PATH + "/ui", "skin");
     }
 
+    private String getParentFolderName(){
+
+        String parentFolderName = "";
+
+
+
+        return parentFolderName;
+    }
 }
