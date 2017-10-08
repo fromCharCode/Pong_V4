@@ -12,13 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.AssetPaths;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.common.GameManager;
 import com.fcc.pong.common.SoundController;
 import com.fcc.util.GdxUtils;
-import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
 
@@ -34,7 +34,6 @@ class OptionsScreen extends ScreenBaseAdapter {
     private static final Logger log = new Logger(OptionsScreen.class.getSimpleName(), Logger.DEBUG); // TODO: remove when done
 
     // == attributes ==
-    private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
     private final SoundController soundController;
@@ -59,10 +58,9 @@ class OptionsScreen extends ScreenBaseAdapter {
     private int filePointer = 1;
 
     // == constructors ==
-    OptionsScreen(GameBase game, SoundController soundController) {
-        this.game = game;
-        assetManager = game.getAssetManager();
-        viewportManager = game.getViewportManager();
+    OptionsScreen(SoundController soundController) {
+        assetManager = PongGame.getInstance().getAssetManager();
+        viewportManager = PongGame.getInstance().getViewportManager();
         this.soundController = soundController;
         currentAtlas = AssetDescriptors.GAME_PLAY;
         init();
@@ -94,7 +92,7 @@ class OptionsScreen extends ScreenBaseAdapter {
     // == public methods ==
     @Override
     public void show() {
-        stage = new Stage(viewportManager.getHudViewport(), game.getBatch());
+        stage = new Stage(viewportManager.getHudViewport(), PongGame.getInstance().getBatch());
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
@@ -171,7 +169,7 @@ class OptionsScreen extends ScreenBaseAdapter {
                 AssetDescriptors.setGamePlay();
                 currentAtlas = AssetDescriptors.GAME_PLAY;
                 load();
-                game.setScreen(new MenuScreen(game));
+                PongGame.getInstance().setScreen(new MenuScreen());
             }
         });
 

@@ -1,11 +1,11 @@
 package com.fcc.pong.screen.banner;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.screen.menu.MenuScreen;
 import com.fcc.pong.screen.transitions.ScreenTransitions;
-import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.banner.BannerScreenBase;
 
 /**
@@ -14,8 +14,8 @@ import com.fcc.util.screen.banner.BannerScreenBase;
  */
 public class BannerScreen extends BannerScreenBase{
 
-    public BannerScreen(GameBase game) {
-        super(game);
+    public BannerScreen() {
+        super(PongGame.getInstance());
     }
 
     @Override
@@ -25,7 +25,7 @@ public class BannerScreen extends BannerScreenBase{
 
     @Override
     protected void onBannerDone() {
-        game.setScreen(new MenuScreen(game), ScreenTransitions.FADE);
+        game.setScreen(new MenuScreen(), ScreenTransitions.FADE);
     }
 
     @Override

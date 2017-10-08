@@ -5,8 +5,12 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.common.GameType;
@@ -15,7 +19,6 @@ import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.screen.game.GameScreen;
 import com.fcc.pong.screen.transitions.ScreenTransitions;
 import com.fcc.util.GdxUtils;
-import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
 
@@ -26,29 +29,25 @@ import com.fcc.util.viewport.ViewportManager;
 public class PlayerScreen extends ScreenBaseAdapter {
 
     // == attributes ==
-    private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
     private final SoundController soundController;
-
-    private GameType gameType;
 
     private Stage stage;
     private int amount = 3;
     private Label amountLabel;
 
     // == constructors ==
-    PlayerScreen(GameBase game, SoundController soundController){
-        this.game = game;
-        assetManager = game.getAssetManager();
-        viewportManager = game.getViewportManager();
+    PlayerScreen(SoundController soundController){
+        assetManager = PongGame.getInstance().getAssetManager();
+        viewportManager = PongGame.getInstance().getViewportManager();
         this.soundController = soundController; // TODO: add menu music later
     }
 
     // == public methods ==
     @Override
     public void show() {
-        stage = new Stage(viewportManager.getHudViewport(), game.getBatch());
+        stage = new Stage(viewportManager.getHudViewport(), PongGame.getInstance().getBatch());
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
@@ -105,7 +104,7 @@ public class PlayerScreen extends ScreenBaseAdapter {
         soloButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameType = GameType.SINGLE_PLAYER;
+                PongGame.getInstance().setGameType(GameType.SINGLE_PLAYER);
                 play();
             }
         });
@@ -113,7 +112,7 @@ public class PlayerScreen extends ScreenBaseAdapter {
         localMultiPlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameType = GameType.MULTI_PLAYER;
+                PongGame.getInstance().setGameType(GameType.MULTI_PLAYER);
                 play();
             }
         });
@@ -121,7 +120,8 @@ public class PlayerScreen extends ScreenBaseAdapter {
         multiPlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MultiPlayerMenu(game));
+                PongGame.getInstance().setGameType(GameType.ONLINE_MULTI_PLAYER);
+                PongGame.getInstance().setScreen(new MultiPlayerMenu(amount, null, soundController));
             }
         });
 
@@ -184,11 +184,11 @@ public class PlayerScreen extends ScreenBaseAdapter {
     }
 
     private void play(){
-        game.setScreen(new GameScreen(game, amount, gameType, soundController), ScreenTransitions.SLIDE);
+        PongGame.getInstance().setScreen(new GameScreen(amount, soundController), ScreenTransitions.SLIDE);
     }
 
     private void back(){
-        game.setScreen(new MenuScreen(game));
+        PongGame.getInstance().setScreen(new MenuScreen());
     }
 
     private void clampAmount(){

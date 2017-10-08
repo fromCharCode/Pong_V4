@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.screen.transitions.ScreenTransitions;
 import com.fcc.util.GdxUtils;
-import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
 
@@ -25,7 +25,6 @@ import com.fcc.util.viewport.ViewportManager;
 public class GameOverScreen extends ScreenBaseAdapter {
 
     // == attributes ==
-    private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
     private final String LabelText;
@@ -33,17 +32,16 @@ public class GameOverScreen extends ScreenBaseAdapter {
     private Stage stage;
 
     // == constructors ==
-    public GameOverScreen(GameBase game, String labelText) {
-        this.game = game;
-        assetManager = game.getAssetManager();
-        viewportManager = game.getViewportManager();
+    public GameOverScreen(String labelText) {
+        assetManager = PongGame.getInstance().getAssetManager();
+        viewportManager = PongGame.getInstance().getViewportManager();
         LabelText = labelText;
     }
 
     // == public methods ==
     @Override
     public void show() {
-        stage = new Stage(viewportManager.getHudViewport(), game.getBatch());
+        stage = new Stage(viewportManager.getHudViewport(), PongGame.getInstance().getBatch());
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
@@ -103,6 +101,6 @@ public class GameOverScreen extends ScreenBaseAdapter {
 
     // == private methods ==
     private void menu(){
-        game.setScreen(new MenuScreen(game), ScreenTransitions.SLIDE);
+        PongGame.getInstance().setScreen(new MenuScreen(), ScreenTransitions.SLIDE);
     }
 }

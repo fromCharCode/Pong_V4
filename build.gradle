@@ -51,6 +51,9 @@ project(":core") {
 
     dependencies {
         compile project (":fcc-utils")
+        compile "org.projectlombok:lombok:1.16.16"
+        compile group: 'io.netty', name: 'netty-all', version: '4.0.4.Final'
+        compile group: 'com.google.guava', name: 'guava', version: '23.0'
     }
 }
 

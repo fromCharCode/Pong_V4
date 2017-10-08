@@ -6,7 +6,8 @@ package com.fcc.pong.common;
  */
 public enum GameType {
     SINGLE_PLAYER,
-    MULTI_PLAYER;
+    MULTI_PLAYER,
+    ONLINE_MULTI_PLAYER;
 
     // == public methods ==
     public boolean isSinglePlayer(){
@@ -16,4 +17,6 @@ public enum GameType {
     public boolean isMultiPlayer(){
         return this == MULTI_PLAYER;
     }
+
+    public boolean isOnlineMultiPlayer() { return this == ONLINE_MULTI_PLAYER; }
 }

@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
 import com.fcc.pong.common.SoundController;
 import com.fcc.util.GdxUtils;
-import com.fcc.util.game.GameBase;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
 
@@ -24,7 +24,6 @@ import com.fcc.util.viewport.ViewportManager;
 public class MenuScreen extends ScreenBaseAdapter {
 
     // == attributes ==
-    private final GameBase game;
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
 
@@ -33,16 +32,15 @@ public class MenuScreen extends ScreenBaseAdapter {
     private Stage stage;
 
     // == constructors ==
-    public MenuScreen(GameBase game) {
-        this.game = game;
-        assetManager = game.getAssetManager();
-        viewportManager = game.getViewportManager();
+    public MenuScreen() {
+        assetManager = PongGame.getInstance().getAssetManager();
+        viewportManager = PongGame.getInstance().getViewportManager();
     }
 
     // == public methods ==
     @Override
     public void show() {
-        stage = new Stage(viewportManager.getHudViewport(), game.getBatch());
+        stage = new Stage(viewportManager.getHudViewport(), PongGame.getInstance().getBatch());
 
         Skin skin = assetManager.get(AssetDescriptors.SKIN);
 
@@ -121,11 +119,11 @@ public class MenuScreen extends ScreenBaseAdapter {
 
     // == private methods ==
     private void play(){
-        game.setScreen(new PlayerScreen(game, soundController));
+        PongGame.getInstance().setScreen(new PlayerScreen(soundController));
     }
 
     private void options(){
-        game.setScreen(new OptionsScreen(game, soundController));
+        PongGame.getInstance().setScreen(new OptionsScreen(soundController));
     }
 
     private void quit(){

@@ -2,8 +2,8 @@ package com.fcc.pong.screen.game.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.entity.Ball;
-import com.fcc.pong.screen.menu.PlayerScreen;
 
 /**
  * Project: Pong_V4
@@ -28,8 +28,10 @@ public class GameController {
 
         Ball ball = gameWorld.getBall();
 
-        if(ball.isNotActive() && (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))){
-            gameWorld.activateBall();
+        if(ball.isNotActive() && (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) ){
+            if(NetworkManager.isHost()) {
+                gameWorld.activateBall(true);
+            }
         }
 
         gameWorld.update(delta);

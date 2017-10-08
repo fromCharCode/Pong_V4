@@ -2,11 +2,14 @@ package com.fcc.pong.script;
 
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Logger;
+import com.fcc.pong.PongGame;
+import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.entity.Ball;
 import com.fcc.pong.entity.Paddle;
 import com.fcc.util.entity.script.EntityScriptBase;
+import de.zaroxh.network.packets.PacketSetBallPosition;
+import lombok.Getter;
 
 /**
  * Project: Pong_V4
@@ -15,7 +18,8 @@ import com.fcc.util.entity.script.EntityScriptBase;
 public class AiPlayerScript extends EntityScriptBase<Paddle> {
 
     // == attributes ==
-    private Ball inviBall;
+    @Getter
+    private static Ball inviBall;
     private boolean paddleHitSettled;
     private boolean targetPointSettled;
     private boolean inviBallSettled;
@@ -34,16 +38,20 @@ public class AiPlayerScript extends EntityScriptBase<Paddle> {
     @Override
     public void update(float delta) {
 
-        if(getTargetX() >= GameConfig.WORLD_WIDTH / 4f){
-            setInviBall();
-            inviBall.update(delta);
-            blockBallFromLeavingTheWorld();
-            getTargetPoint();
-            hitPoint();
-            aiControl();
-        } else {
-            reset();
+        if(PongGame.getInstance().getGameType().isOnlineMultiPlayer() && NetworkManager.isHost()) {
+            if(getTargetX() >= GameConfig.WORLD_WIDTH / 4f){
+                setInviBall();
+                inviBall.update(delta);
+                blockBallFromLeavingTheWorld();
+                getTargetPoint();
+                hitPoint();
+                aiControl();
+            } else {
+                reset();
+            }
+            NetworkManager.sendPacket(new PacketSetBallPosition(inviBall.getX(), inviBall.getY()));
         }
+
     }
 
     // == private methods ==

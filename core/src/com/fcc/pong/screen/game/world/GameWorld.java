@@ -3,7 +3,8 @@ package com.fcc.pong.screen.game.world;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
-import com.fcc.pong.common.GameType;
+import com.fcc.pong.PongGame;
+import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.common.SoundController;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.entity.Ball;
@@ -12,8 +13,9 @@ import com.fcc.pong.entity.Paddle;
 import com.fcc.pong.screen.menu.GameOverScreen;
 import com.fcc.pong.script.AiPlayerScript;
 import com.fcc.pong.script.LeftPlayerInputScript;
+import com.fcc.pong.script.MultiplayerOpponentScript;
 import com.fcc.pong.script.RightPlayerInputScript;
-import com.fcc.util.game.GameBase;
+import de.zaroxh.network.packets.PacketSetGamePaused;
 
 /**
  * Project: Pong_V4
@@ -23,7 +25,6 @@ public class GameWorld {
 
     // == attributes ==
     private final SoundController soundController;
-    private final GameBase game;
     private final EntityFactory factory;
     private final int maxRounds;
 
@@ -35,8 +36,6 @@ public class GameWorld {
     private boolean drawGrid = true;
     private boolean paused;
 
-    private GameType gameType;
-
     private int leftScore;
     private int rightScore;
     private int round;
@@ -44,13 +43,10 @@ public class GameWorld {
     private boolean isRightStart;
 
     // == constructors ==
-    public GameWorld(SoundController soundController, GameBase game, EntityFactory factory, int maxRounds, GameType gameType) {
+    public GameWorld(SoundController soundController, EntityFactory factory, int maxRounds) {
         this.soundController = soundController;
-        this.game = game;
         this.factory = factory;
         this.maxRounds = maxRounds;
-
-        this.gameType = gameType;
 
         init();
     }
@@ -61,11 +57,13 @@ public class GameWorld {
         leftPaddle = factory.createLeftPaddle();
         rightPaddle = factory.createRightPaddle();
         leftPaddle.addScript(new LeftPlayerInputScript());
-        if(gameType.isSinglePlayer()){
+        if(PongGame.getInstance().getGameType().isSinglePlayer()){
             rightPaddle.setBall(ball);
             rightPaddle.addScript(new AiPlayerScript());
-        } else if (gameType.isMultiPlayer()){
+        } else if (PongGame.getInstance().getGameType().isMultiPlayer()){
             rightPaddle.addScript(new RightPlayerInputScript());
+        } else if(PongGame.getInstance().getGameType().isOnlineMultiPlayer()) {
+            rightPaddle.addScript(new MultiplayerOpponentScript());
         }
     }
 
@@ -91,12 +89,14 @@ public class GameWorld {
         checkBallWithPaddleCollision(rightPaddle);
     }
 
-    void activateBall() {
-        float startAngle = MathUtils.random(120, 240);
-        if(isRightStart){
-            startAngle = 180 -startAngle;
+    void activateBall(boolean setVelocity) {
+        if(setVelocity) {
+            float startAngle = MathUtils.random(120, 240);
+            if(isRightStart){
+                startAngle = 180 -startAngle;
+            }
+            ball.setVelocity(startAngle, GameConfig.BALL_START_SPEED);
         }
-        ball.setVelocity(startAngle, GameConfig.BALL_START_SPEED);
         paused = false;
     }
 
@@ -134,6 +134,9 @@ public class GameWorld {
 
     void togglePaused(){
         paused = !paused;
+        if(PongGame.getInstance().getGameType().isOnlineMultiPlayer()) {
+            NetworkManager.sendPacket(new PacketSetGamePaused(paused));
+        }
     }
 
     int getRightScore() {
@@ -239,6 +242,6 @@ public class GameWorld {
             labelText = "draw!";
         }
 
-        game.setScreen(new GameOverScreen(game, labelText));
+        PongGame.getInstance().setScreen(new GameOverScreen(labelText));
     }
 }
