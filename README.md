@@ -1,16 +1,11 @@
 # Pong_V4
 My version of a Pong game using LibGDX
 
-This is not the final state of the pong game, but the game is running well.
+I created this game to enhance my programming skills, in which i succeeded.
 
-- Singleplayer vs AI
-- Local Multiplayer
-- Resizable
-- You can set the amount of rounds
-
-there will be added:
-- LAN Multiplayer
-- different Texturepacks (done)
-- changing sound volume (done)
-- pickups
-- maybe obstacles + different maps
+While doing this project I learned:
+- Gradele as a build sysem
+- OOP
+- how to write reusable code
+- many aspects of Java itself, e.g. modules
+- a few designpatterns, such as pool, MVC, singleton, and others
