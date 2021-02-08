@@ -3,11 +3,9 @@ package com.fcc.pong.script;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.fcc.pong.PongGame;
-import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.entity.Paddle;
 import com.fcc.util.entity.script.EntityScriptBase;
-import de.zaroxh.network.packets.PacketSetPaddlePosition;
 
 /**
  * Project: Pong_V4
@@ -35,9 +33,5 @@ public class LeftPlayerInputScript extends EntityScriptBase<Paddle> {
         }
 
         entity.setVelocityY(velocity);
-
-        if(PongGame.getInstance().getGameType().isOnlineMultiPlayer()) {
-            NetworkManager.sendPacket(new PacketSetPaddlePosition(entity.getY()));
-        }
     }
 }

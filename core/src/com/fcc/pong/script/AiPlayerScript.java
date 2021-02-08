@@ -3,13 +3,10 @@ package com.fcc.pong.script;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.fcc.pong.PongGame;
-import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.entity.Ball;
 import com.fcc.pong.entity.Paddle;
 import com.fcc.util.entity.script.EntityScriptBase;
-import de.zaroxh.network.packets.PacketSetBallPosition;
-import lombok.Getter;
 
 /**
  * Project: Pong_V4
@@ -18,7 +15,6 @@ import lombok.Getter;
 public class AiPlayerScript extends EntityScriptBase<Paddle> {
 
     // == attributes ==
-    @Getter
     private static Ball inviBall;
     private boolean paddleHitSettled;
     private boolean targetPointSettled;
@@ -38,19 +34,18 @@ public class AiPlayerScript extends EntityScriptBase<Paddle> {
     @Override
     public void update(float delta) {
 
-        if(PongGame.getInstance().getGameType().isOnlineMultiPlayer() && NetworkManager.isHost()) {
-            if(getTargetX() >= GameConfig.WORLD_WIDTH / 4f){
-                setInviBall();
-                inviBall.update(delta);
-                blockBallFromLeavingTheWorld();
-                getTargetPoint();
-                hitPoint();
-                aiControl();
-            } else {
-                reset();
-            }
-            NetworkManager.sendPacket(new PacketSetBallPosition(inviBall.getX(), inviBall.getY()));
+
+        if(getTargetX() >= GameConfig.WORLD_WIDTH / 4f){
+            setInviBall();
+            inviBall.update(delta);
+            blockBallFromLeavingTheWorld();
+            getTargetPoint();
+            hitPoint();
+            aiControl();
+        } else {
+            reset();
         }
+
 
     }
 
@@ -151,6 +146,34 @@ public class AiPlayerScript extends EntityScriptBase<Paddle> {
         if(entity.getTarget().getX() >= GameConfig.WORLD_WIDTH){
             reset();
         }
+    }
+
+    public static Ball getInviBall() {
+        return inviBall;
+    }
+
+    public boolean isPaddleHitSettled() {
+        return paddleHitSettled;
+    }
+
+    public boolean isTargetPointSettled() {
+        return targetPointSettled;
+    }
+
+    public boolean isInviBallSettled() {
+        return inviBallSettled;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public float getHitPoint() {
+        return hitPoint;
     }
 }
 

@@ -10,14 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.fcc.pong.PongGame;
 import com.fcc.pong.assets.AssetDescriptors;
 import com.fcc.pong.assets.RegionNames;
-import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.common.SoundController;
 import com.fcc.pong.screen.game.GameScreen;
 import com.fcc.pong.screen.transitions.ScreenTransitions;
 import com.fcc.util.GdxUtils;
 import com.fcc.util.screen.ScreenBaseAdapter;
 import com.fcc.util.viewport.ViewportManager;
-import lombok.Getter;
 
 /**
  * Project: Pong_V4
@@ -28,13 +26,10 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
     private final AssetManager assetManager;
     private final ViewportManager viewportManager;
 
-    @Getter
     private static int amount;
 
-    @Getter
     private static String message;
 
-    @Getter
     private static SoundController soundController;
 
     private Stage stage;
@@ -67,21 +62,11 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
 
         // connect button
         TextButton connectButton = new TextButton("CONNECT", skin);
-        connectButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                NetworkManager.multiPlayerConnect(inputField.getText());
-            }
-        });
+
 
         // host button
         TextButton hostButton = new TextButton("HOST", skin);
-        hostButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                NetworkManager.multiPlayerHost();
-            }
-        });
+
         // back button
         TextButton backButton = new TextButton("BACK", skin);
         backButton.addListener(new ChangeListener() {
@@ -137,4 +122,15 @@ public class MultiPlayerMenu extends ScreenBaseAdapter {
         PongGame.getInstance().setScreen(new GameScreen(amount, soundController), ScreenTransitions.SLIDE);
     }
 
+    public static int getAmount() {
+        return amount;
+    }
+
+    public static String getMessage() {
+        return message;
+    }
+
+    public static SoundController getSoundController() {
+        return soundController;
+    }
 }

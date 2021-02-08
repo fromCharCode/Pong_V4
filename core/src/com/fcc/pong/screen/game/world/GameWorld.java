@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.fcc.pong.PongGame;
 import com.fcc.pong.common.GameType;
-import com.fcc.pong.common.NetworkManager;
 import com.fcc.pong.common.SoundController;
 import com.fcc.pong.config.GameConfig;
 import com.fcc.pong.entity.Ball;
@@ -16,7 +15,6 @@ import com.fcc.pong.script.AiPlayerScript;
 import com.fcc.pong.script.LeftPlayerInputScript;
 import com.fcc.pong.script.MultiplayerOpponentScript;
 import com.fcc.pong.script.RightPlayerInputScript;
-import de.zaroxh.network.packets.PacketSetGamePaused;
 
 /**
  * Project: Pong_V4
@@ -139,9 +137,6 @@ public class GameWorld {
 
     void togglePaused(){
         paused = !paused;
-        if(PongGame.getInstance().getGameType().isOnlineMultiPlayer()) {
-            NetworkManager.sendPacket(new PacketSetGamePaused(paused));
-        }
     }
 
     int getRightScore() {
